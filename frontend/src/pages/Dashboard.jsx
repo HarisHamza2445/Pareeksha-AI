@@ -208,7 +208,7 @@ const Dashboard = () => {
                   </BarChart>
                 </ResponsiveContainer>
               ) : (
-                <div className="h-full flex items-center justify-center text-slate-400 font-medium">Generate questions to analyze topics.</div>
+                <div className="h-full flex items-center justify-center text-slate-400 font-medium text-sm">Waiting for topic data...</div>
               )}
           </div>
         </div>
@@ -216,21 +216,21 @@ const Dashboard = () => {
       </div>
 
       {/* System Status Bar */}
-      <div className="fixed bottom-4 lg:bottom-8 left-4 lg:left-[calc(20rem+3rem)] right-4 lg:right-12 bg-white/90 backdrop-blur-xl border border-slate-200 rounded-2xl py-3 px-4 lg:px-6 flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-0 shadow-lg shadow-slate-200/50 z-20">
-        <div className="flex flex-wrap justify-center items-center gap-4 lg:gap-6">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-            <span className="text-xs font-black uppercase tracking-widest text-slate-800">Core Engine 4.0.2</span>
+      <div className="fixed bottom-0 sm:bottom-4 lg:bottom-8 left-0 sm:left-4 lg:left-[calc(20rem+3rem)] right-0 sm:right-4 lg:right-12 bg-white/90 backdrop-blur-xl border-t sm:border border-slate-200 rounded-none sm:rounded-2xl py-2.5 px-4 lg:px-6 flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-0 shadow-[0_-4px_20px_rgba(0,0,0,0.03)] sm:shadow-lg z-20 transition-all duration-500">
+        <div className="flex justify-center items-center gap-3 lg:gap-6">
+          <div className="flex items-center gap-1.5 lg:gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span className="text-[9px] lg:text-xs font-black uppercase tracking-widest text-slate-800">Engine Online</span>
           </div>
-          <div className="h-4 w-px bg-slate-200"></div>
-          <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-sm text-slate-400">cloud_done</span>
-            <span className="text-xs font-medium text-slate-500">All exam nodes synced</span>
+          <div className="h-3 w-px bg-slate-200"></div>
+          <div className="flex items-center gap-1.5 font-medium text-slate-500">
+            <span className="material-symbols-outlined text-sm hidden sm:inline">cloud_done</span>
+            <span className="text-[9px] lg:text-xs">All Nodes Synced</span>
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <span className="text-xs text-slate-400 font-medium">Last backup: 14 mins ago</span>
-          <button className="text-slate-900 text-xs font-black uppercase tracking-widest hover:underline">System Logs</button>
+          <span className="text-[9px] lg:text-xs text-slate-400 font-semibold hidden lg:inline">Last backup: 14m ago</span>
+          <button className="text-slate-900 text-[9px] lg:text-xs font-black uppercase tracking-widest hover:underline px-2">System Logs</button>
         </div>
       </div>
     </div>

@@ -18,21 +18,26 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     return base + (isActive ? active : inactive);
   };
 
+  const handleNavClick = (path) => {
+    setIsOpen(false); // Auto-close on mobile
+    navigate(path);
+  };
+
   return (
     <>
       {/* Mobile Overlay */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-30 lg:hidden"
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-md z-30 lg:hidden transition-opacity duration-300"
           onClick={() => setIsOpen(false)}
         />
       )}
 
-      <aside className={`h-screen w-80 fixed left-0 top-0 z-40 border-r border-slate-200/30 bg-slate-50/90 backdrop-blur-xl flex flex-col p-8 font-['Inter'] tracking-tight text-sm transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
+      <aside className={`h-screen w-80 fixed left-0 top-0 z-40 border-r border-slate-200/30 bg-slate-50/90 backdrop-blur-xl flex flex-col p-8 font-['Inter'] tracking-tight text-sm transform transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
 
         {/* Brand */}
-      <div className="flex items-center gap-4 mb-10 px-2">
-        <div className="w-11 h-11 bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center rounded-2xl shadow-xl shadow-slate-900/20">
+      <div className="flex items-center gap-4 mb-10 px-2 group cursor-pointer" onClick={() => handleNavClick('/')}>
+        <div className="w-11 h-11 bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center rounded-2xl shadow-xl shadow-slate-900/20 group-hover:scale-110 transition-transform duration-300">
           <span className="material-symbols-outlined text-white text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>
             architecture
           </span>
@@ -56,10 +61,10 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       {/* Navigation */}
       <nav className="flex flex-col gap-1">
         {navItems.map(({ path, icon, label }) => (
-          <Link key={path} to={path} className={getLinkClasses(path)}>
+          <button key={path} onClick={() => handleNavClick(path)} className={getLinkClasses(path)}>
             <span className={`material-symbols-outlined text-xl ${location.pathname === path ? '' : 'opacity-60'}`}>{icon}</span>
             <span>{label}</span>
-          </Link>
+          </button>
         ))}
       </nav>
 

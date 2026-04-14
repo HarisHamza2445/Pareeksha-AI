@@ -20,30 +20,17 @@ const QuestionBank = () => {
     fetchQuestions();
   }, []);
 
-  return (
-    <div className="p-6 lg:p-12 w-full max-w-7xl mx-auto min-h-[calc(100vh-6rem)]">
+  const subjects = ['All Subjects', 'Public Policy', 'Constitutional Law', 'Physics'];
+  const types = ['All Types', 'Multiple Choice', 'Short Answer'];
 
-      {/* Hero Header */}
-      <div className="glass-card rounded-[2.5rem] p-10 mb-8 border border-white/30 relative overflow-hidden">
-        <div className="absolute -right-16 -top-16 w-64 h-64 bg-gradient-to-br from-blue-100/30 to-transparent rounded-full blur-3xl pointer-events-none"></div>
-        <div className="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 lg:gap-0">
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="bg-slate-100 border border-slate-200/60 text-slate-600 px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest">Verified Vault</span>
-            </div>
-            <h2 className="text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 mb-3 font-['Manrope'] leading-none">Question Bank</h2>
-            <p className="text-slate-500 text-base lg:text-lg font-medium">
-              Secure repository of AI-resistant evaluation units. Each question has been red-teamed and certified.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-3 shrink-0">
-            <button className="px-6 py-3.5 bg-white border border-slate-200 text-slate-700 rounded-2xl font-bold flex items-center gap-2 hover:bg-slate-50 transition-all shadow-sm">
-              <span className="material-symbols-outlined text-lg">filter_list</span>
-              Filter
-            </button>
-            <button className="px-6 py-3.5 bg-slate-900 text-white rounded-2xl font-bold flex items-center gap-2 shadow-xl hover:bg-slate-800 transition-all">
-              <span className="material-symbols-outlined text-lg">upload</span>
-              Import CSV
+  const filteredQuestions = questions.filter(q => {
+    const matchesSearch = q.questionText.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSubject = filterSubject === 'All Subjects' || q.subject === filterSubject;
+    const matchesType = filterType === 'All Types' || q.examType === filterType;
+    return matchesSearch && matchesSubject && matchesType;
+  });
+
+  return (
             </button>
           </div>
         </div>
