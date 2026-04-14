@@ -53,6 +53,12 @@ It must genuinely be difficult for current LLMs to solve. It should require:
 2. Lived experiential reasoning or real-time judgment under ambiguous conditions.
 3. Multi-step logic that penalizes simple factual recall.
 
+IMPORTANT: Structure the question and ideal answer using proper Markdown:
+- Use **bolding** for emphasis.
+- Use lists for multiple options or points.
+- Use \`inline code\` or blocks if relevant to technical subjects.
+- Ensure the question is professionally formatted for a high-stakes exam.
+
 ${modeInstruction}`;
 
   const response = await generateWithRetry(MODEL_NAME, prompt, {

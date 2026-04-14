@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
 
 const QuestionBank = () => {
   const [questions, setQuestions] = useState([]);
@@ -117,9 +118,9 @@ const QuestionBank = () => {
                   <span className="mx-0 md:mx-2 text-slate-300 hidden md:inline">|</span>
                   <span className="text-xs font-label text-slate-400">Added {new Date(q.createdAt).toLocaleDateString()}</span>
                 </div>
-                <h3 className="text-xl font-headline font-semibold text-slate-900 mb-3 leading-snug">
-                  {q.questionText}
-                </h3>
+                <div className="prose prose-slate prose-lg max-w-none font-headline font-semibold text-slate-900 mb-3 leading-snug">
+                  <ReactMarkdown>{q.questionText}</ReactMarkdown>
+                </div>
                 <p className="text-sm text-slate-500 mb-6 line-clamp-2 leading-relaxed">
                   {q.difficultyJustification}
                 </p>

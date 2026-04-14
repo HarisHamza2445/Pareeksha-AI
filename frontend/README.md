@@ -1,16 +1,37 @@
-# React + Vite
+# Pareeksha AI - Frontend Interface
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the React-based client for the **Pareeksha AI** Adversarial Engine. It features a premium, glassmorphic design system tailored for high-stakes evaluation design.
 
-Currently, two official plugins are available:
+## 🎨 Design System
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The frontend is built with a focus on **Visual Excellence**:
+- **Typography**: Uses `Manrope` for headlines and `Inter` for body text.
+- **Styling**: Vanilla Tailwind CSS with custom glassmorphism and mesh gradients.
+- **Markdown Support**: Full markdown rendering for questions and answers using `@tailwindcss/typography` (prose) and `react-markdown`.
+- **Charts**: Interactive failure trend analysis using `recharts`.
 
-## React Compiler
+## 🏗️ Core Pages
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Dashboard**: High-level analytics, integrity scores, and recent question activity.
+- **Exam Creator**: The central workspace for configuring and generating adversarial questions.
+- **Question Bank**: A searchable, filtered vault of all verified questions.
+- **Auth Flow**: Secure Login and Registration layouts.
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Framework**: [Vite](https://vitejs.dev/) + [React 19](https://react.dev/)
+- **Routing**: [React Router 7](https://reactrouter.com/)
+- **State/Data**: [Axios](https://axios-http.com/) for API communication.
+- **Rendering**: [React Markdown](https://github.com/remarkjs/react-markdown) for technical content.
+
+## 🚦 Local Development
+
+```bash
+# Install dependencies
+npm install
+
+# Run dev server
+npm run dev
+```
+
+The app will be available at `http://localhost:5173`. Make sure the backend is running at `http://localhost:5001`.

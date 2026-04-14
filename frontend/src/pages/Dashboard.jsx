@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
 const Dashboard = () => {
@@ -132,12 +133,14 @@ const Dashboard = () => {
         <div className="space-y-4">
           {stats.recentQuestions && stats.recentQuestions.length > 0 ? stats.recentQuestions.map(q => (
             <div key={q._id} className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-[1.5rem] border border-transparent hover:border-slate-200/60 hover:bg-white/50 transition-all duration-300">
-              <div className="flex items-start md:items-center gap-4 lg:gap-6">
+              <div className="flex items-start md:items-center gap-4 lg:gap-6 w-full overflow-hidden">
                 <div className="shrink-0 w-12 h-12 lg:w-16 lg:h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-slate-700 border border-slate-200/60">
                   <span className="material-symbols-outlined text-3xl">terminal</span>
                 </div>
-                <div>
-                  <h4 className="font-bold text-lg text-slate-900 leading-tight mb-2 max-w-2xl truncate tracking-tight">{q.questionText}</h4>
+                <div className="flex-1 overflow-hidden">
+                  <div className="prose prose-slate prose-sm max-w-none text-slate-900 font-bold mb-2 line-clamp-2 leading-tight">
+                    <ReactMarkdown>{q.questionText}</ReactMarkdown>
+                  </div>
                   <div className="flex items-center gap-3">
                     <span className="bg-slate-100 text-slate-500 text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider">{q.subject}</span>
                     <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">• {new Date(q.createdAt).toLocaleDateString()}</span>

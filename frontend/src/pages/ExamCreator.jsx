@@ -203,14 +203,14 @@ const ExamCreator = () => {
               <div className="space-y-8">
                 <div className="bg-slate-50/50 p-8 rounded-3xl border border-slate-200">
                   <h5 className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-3">Question Prompt</h5>
-                  <ReactMarkdown className="prose prose-slate prose-lg max-w-none font-medium text-slate-800 leading-relaxed whitespace-pre-wrap">
+                  <ReactMarkdown className="prose prose-slate prose-lg max-w-none font-medium text-slate-800 leading-relaxed">
                     {generatedData.question}
                   </ReactMarkdown>
                 </div>
 
                 <div className="bg-blue-50/50 p-6 rounded-3xl border border-blue-100 shadow-sm">
                   <h5 className="text-[11px] font-black text-blue-400 uppercase tracking-widest mb-3">Ideal Answer (Human Verification)</h5>
-                  <ReactMarkdown className="prose prose-blue prose-sm max-w-none font-medium text-blue-900 leading-relaxed whitespace-pre-wrap">
+                  <ReactMarkdown className="prose prose-blue prose-sm max-w-none font-medium text-blue-900 leading-relaxed">
                     {generatedData.idealAnswer}
                   </ReactMarkdown>
                 </div>
