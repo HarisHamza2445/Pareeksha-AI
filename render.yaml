@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: pareeksha-ai
+    env: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+        placeholder: "your_mongodb_atlas_uri"
+      - key: GEMINI_API_KEY
+        sync: false
+        placeholder: "your_google_gemini_api_key"
+      - key: PORT
+        value: 10000

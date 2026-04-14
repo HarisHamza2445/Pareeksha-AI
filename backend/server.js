@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -32,9 +33,20 @@ mongoose.connect(MONGO_URI)
 
 const questionRoutes = require('./routes/questionRoutes');
 
-// Routes
+// API Routes
 app.use('/api', questionRoutes);
 
-app.get('/', (req, res) => {
-  res.send('API is running...');
-});
+// --- Deployment Logic: Serve Frontend Static Files ---
+if (process.env.NODE_ENV === 'production') {
+  // Point to the built assets in the frontend directory
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+  // For any request that doesn't match an API route, serve index.html
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../frontend', 'dist', 'index.html'));
+  });
+} else {
+  app.get('/', (req, res) => {
+    res.send('API is running in development mode...');
+  });
+}
