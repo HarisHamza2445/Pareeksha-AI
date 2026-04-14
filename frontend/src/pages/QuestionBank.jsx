@@ -5,6 +5,9 @@ import ReactMarkdown from 'react-markdown';
 const QuestionBank = () => {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterSubject, setFilterSubject] = useState('All Subjects');
+  const [filterType, setFilterType] = useState('All Types');
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -20,8 +23,8 @@ const QuestionBank = () => {
     fetchQuestions();
   }, []);
 
-  const subjects = ['All Subjects', 'Public Policy', 'Constitutional Law', 'Physics'];
-  const types = ['All Types', 'Multiple Choice', 'Short Answer'];
+  const subjects = ['All Subjects', ...new Set(questions.map(q => q.subject))];
+  const types = ['All Types', 'UPSC', 'JEE', 'NEET', 'University'];
 
   const filteredQuestions = questions.filter(q => {
     const matchesSearch = q.questionText.toLowerCase().includes(searchTerm.toLowerCase());
@@ -31,130 +34,116 @@ const QuestionBank = () => {
   });
 
   return (
-            </button>
+    <div className="p-4 lg:p-12 min-h-[calc(100vh-6rem)]">
+      {/* Header Area */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-10 animate-in">
+        <div className="space-y-2 lg:space-y-3">
+          <div className="flex items-center gap-2.5 text-slate-900 font-bold text-[10px] lg:text-xs tracking-[0.2em] uppercase">
+            <span className="w-2 h-2 lg:w-2.5 lg:h-2.5 rounded-full bg-slate-900"></span>
+            Verified Vault
+          </div>
+          <h3 className="text-3xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-[1.1] font-['Manrope']">Question Bank</h3>
+          <p className="text-slate-500 max-w-2xl text-sm lg:text-lg leading-relaxed font-medium">Your curated repository of AI-resistant adversarial questions.</p>
+        </div>
+        <div className="flex items-center gap-4 w-full md:w-auto">
+          <button className="flex-1 md:flex-none py-3 px-6 bg-slate-900 text-white rounded-xl lg:rounded-2xl font-bold flex items-center justify-center gap-2 shadow-xl shadow-slate-900/10 hover:bg-slate-800 transition-all active:scale-95">
+            <span className="material-symbols-outlined text-xl">download</span>
+            Export JSON
+          </button>
+        </div>
+      </div>
+
+      {/* Filter Bar */}
+      <div className="glass-card p-4 lg:p-6 rounded-[1.5rem] lg:rounded-[2rem] border border-white/30 mb-8 lg:mb-10 animate-in delay-100 shadow-sm shadow-slate-200/50">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="relative group">
+            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg group-focus-within:text-slate-900 transition-colors">search</span>
+            <input 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full bg-white/50 border border-slate-200/60 rounded-xl py-3 pl-11 pr-4 text-xs font-semibold focus:ring-2 focus:ring-slate-900/5 transition-all outline-none" 
+              placeholder="Search concepts..." 
+            />
+          </div>
+          <select 
+            value={filterSubject}
+            onChange={(e) => setFilterSubject(e.target.value)}
+            className="bg-white/50 border border-slate-200/60 rounded-xl py-3 px-4 text-xs font-semibold focus:ring-2 focus:ring-slate-900/5 outline-none cursor-pointer"
+          >
+            {subjects.map(s => <option key={s} value={s}>{s}</option>)}
+          </select>
+          <select 
+            value={filterType}
+            onChange={(e) => setFilterType(e.target.value)}
+            className="bg-white/50 border border-slate-200/60 rounded-xl py-3 px-4 text-xs font-semibold focus:ring-2 focus:ring-slate-900/5 outline-none cursor-pointer"
+          >
+            {types.map(t => <option key={t} value={t}>{t}</option>)}
+          </select>
+          <div className="flex items-center justify-between px-4 py-3 bg-white/50 border border-slate-200/60 rounded-xl">
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Sort By</span>
+            <span className="text-xs font-bold text-slate-900 leading-none">Recent First</span>
           </div>
         </div>
       </div>
 
-
-      {/* Bento Filter Bar */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
-        <div className="md:col-span-1 p-5 bg-white rounded-xl flex items-center gap-4 border border-slate-100 shadow-sm">
-          <div className="p-2 bg-emerald-50 rounded-lg text-emerald-600">
-            <span className="material-symbols-outlined">psychology</span>
-          </div>
-          <div className="w-full">
-            <p className="text-xs font-label uppercase tracking-widest text-slate-400">Difficulty</p>
-            <select className="w-full bg-transparent border-none p-0 font-bold text-slate-900 focus:ring-0 text-sm outline-none cursor-pointer">
-              <option>All Levels</option>
-              <option>Foundational</option>
-              <option>Intermediate</option>
-              <option>Advanced Expert</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="md:col-span-1 p-5 bg-white rounded-xl flex items-center gap-4 border border-slate-100 shadow-sm">
-          <div className="p-2 bg-blue-50 rounded-lg text-blue-600">
-            <span className="material-symbols-outlined">category</span>
-          </div>
-          <div className="w-full">
-            <p className="text-xs font-label uppercase tracking-widest text-slate-400">Topic</p>
-            <select className="w-full bg-transparent border-none p-0 font-bold text-slate-900 focus:ring-0 text-sm outline-none cursor-pointer">
-              <option>All Topics</option>
-              <option>Public Policy</option>
-              <option>Constitutional Law</option>
-              <option>Ancient History</option>
-              <option>Physics & Thermodynamics</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="md:col-span-2 p-5 bg-white rounded-xl flex items-center justify-between border border-slate-100 shadow-sm">
-          <div className="flex items-center gap-4">
-            <div className="p-2 bg-amber-50 rounded-lg text-amber-600">
-              <span className="material-symbols-outlined">verified_user</span>
-            </div>
-            <div>
-              <p className="text-xs font-label uppercase tracking-widest text-slate-400">Integrity Threshold</p>
-              <p className="font-bold text-sm text-slate-900">Min. 85% AI-Proof</p>
-            </div>
-          </div>
-          <div className="w-48 h-2 bg-slate-100 rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-slate-800 to-slate-900" style={{ width: '85%' }}></div>
-          </div>
-        </div>
-      </div>
-
-      {/* Question Grid */}
-      <div className="grid grid-cols-1 gap-6">
+      {/* Repository List */}
+      <div className="space-y-4 pb-20 sm:pb-0">
         {loading ? (
-          <div className="text-center py-20 text-slate-500 font-bold animate-pulse">Loading secure vault...</div>
-        ) : questions.length === 0 ? (
-          <div className="text-center py-20 text-slate-500 font-bold">No adversarial questions logged yet. Go to Exam Creator to generate some!</div>
-        ) : (
-          questions.map((q) => (
-            <div key={q._id} className="group bg-white p-6 md:p-8 rounded-xl transition-all duration-300 hover:shadow-xl hover:shadow-slate-200/50 border border-slate-100 flex flex-col md:flex-row gap-6 md:gap-8">
-              <div className="flex-1">
-                <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-4">
-                  <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-full flex items-center gap-1.5 shadow-sm">
-                    <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
-                    {q.examType || "AI-Generated"}
-                  </span>
-                  <span className="text-xs font-label text-slate-400">Subject: {q.subject}</span>
-                  <span className="mx-0 md:mx-2 text-slate-300 hidden md:inline">|</span>
-                  <span className="text-xs font-label text-slate-400">Added {new Date(q.createdAt).toLocaleDateString()}</span>
+          <div className="grid grid-cols-1 gap-4">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="h-40 bg-white/50 animate-pulse rounded-[2rem] border border-slate-100"></div>
+            ))}
+          </div>
+        ) : filteredQuestions.length > 0 ? filteredQuestions.map((q, idx) => (
+          <div 
+            key={q._id} 
+            className={`glass-card p-6 lg:p-8 rounded-[2rem] border border-white/40 shadow-sm glass-card-hover animate-in`}
+            style={{ animationDelay: `${(idx % 5) * 100 + 200}ms` }}
+          >
+            <div className="flex flex-col lg:flex-row justify-between items-start gap-6">
+              <div className="flex-1 space-y-4 w-full overflow-hidden">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="bg-slate-100 text-slate-900 px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">{q.examType}</span>
+                  <span className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-emerald-100">Failure: {q.failureRate}%</span>
+                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest ml-auto lg:ml-2">ID: {q._id.slice(-6)}</span>
                 </div>
-                <div className="prose prose-slate prose-lg max-w-none font-headline font-semibold text-slate-900 mb-3 leading-snug">
+                
+                <div className="prose prose-slate prose-sm lg:prose-lg max-w-none text-slate-900 font-bold leading-tight">
                   <ReactMarkdown>{q.questionText}</ReactMarkdown>
                 </div>
-                <p className="text-sm text-slate-500 mb-6 line-clamp-2 leading-relaxed">
-                  {q.difficultyJustification}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {q.tags?.map((tag, idx) => (
-                    <span key={idx} className="px-3 py-1 bg-slate-50 rounded-lg text-[11px] font-bold text-slate-500 uppercase tracking-wider">{tag}</span>
-                  ))}
+
+                <div className="p-4 rounded-xl bg-slate-50/50 border border-slate-100">
+                  <p className="text-[10px] text-slate-400 uppercase font-black tracking-widest mb-1.5">Knowledge Tags</p>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-2 py-0.5 bg-white border border-slate-200 rounded text-[9px] font-bold text-slate-500 uppercase tracking-wide">{q.subject}</span>
+                    <span className="px-2 py-0.5 bg-white border border-slate-200 rounded text-[9px] font-bold text-slate-500 uppercase tracking-wide">{q.difficulty}</span>
+                    {q.tags?.map((tag, i) => (
+                      <span key={i} className="px-2 py-0.5 bg-white border border-slate-200 rounded text-[9px] font-bold text-slate-500 uppercase tracking-wide">{tag}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
-              <div className="md:w-64 flex flex-col justify-between items-start md:items-end border-l-0 md:border-l border-slate-100 md:pl-8 border-t md:border-t-0 pt-4 md:pt-0">
-                <div className="text-left md:text-right w-full">
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">AI-Resistance Score</p>
-                  <div className={`text-3xl font-headline font-bold ${q.failureRate >= 90 ? 'text-emerald-600' : 'text-amber-500'}`}>
-                    {q.failureRate}%
-                  </div>
-                  <div className="w-full h-1.5 bg-slate-100 rounded-full mt-2 overflow-hidden w-24 ml-0 md:ml-auto">
-                    <div className={`h-full ${q.failureRate >= 90 ? 'bg-emerald-500' : 'bg-amber-400'}`} style={{ width: `${q.failureRate}%` }}></div>
-                  </div>
+
+              <div className="flex lg:flex-col items-center lg:items-end justify-between lg:justify-start w-full lg:w-32 gap-4 lg:gap-8 bg-slate-50 lg:bg-transparent p-4 lg:p-0 rounded-2xl">
+                <div className="text-left lg:text-right">
+                  <p className="text-[10px] text-slate-400 uppercase font-black tracking-widest mb-1">Created</p>
+                  <p className="text-sm font-bold text-slate-900">{new Date(q.createdAt).toLocaleDateString()}</p>
                 </div>
-                <div className="flex gap-2 mt-4 md:mt-6 w-full md:w-auto justify-start md:justify-end">
-                  <button className="p-2 text-slate-400 hover:bg-slate-50 hover:text-slate-900 rounded-lg transition-colors">
-                    <span className="material-symbols-outlined">edit</span>
-                  </button>
-                  <button className="p-2 text-slate-400 hover:bg-slate-50 hover:text-slate-900 rounded-lg transition-colors">
-                    <span className="material-symbols-outlined">content_copy</span>
-                  </button>
-                  <button className="p-2 text-red-400 hover:bg-red-50 hover:text-red-600 rounded-lg transition-colors">
-                    <span className="material-symbols-outlined">delete</span>
+                <div className="flex items-center gap-2">
+                  <button className="w-10 h-10 bg-white lg:bg-slate-900 text-slate-900 lg:text-white rounded-xl shadow-lg lg:shadow-xl shadow-slate-900/10 hover:scale-110 transition-all active:scale-95 flex items-center justify-center">
+                    <span className="material-symbols-outlined text-lg font-variation-settings-fill">share</span>
                   </button>
                 </div>
               </div>
             </div>
-          ))
+          </div>
+        )) : (
+          <div className="glass-card rounded-[2rem] p-20 text-center animate-in">
+            <span className="material-symbols-outlined text-6xl text-slate-200 mb-4">database_off</span>
+            <p className="text-slate-400 font-medium">No questions follow the active sync filters.</p>
+          </div>
         )}
       </div>
-
-      {/* Pagination */}
-      <div className="mt-12 flex justify-between items-center bg-white border border-slate-100 p-5 rounded-xl shadow-sm">
-        <span className="text-sm font-bold text-slate-500">Showing {questions.length} questions</span>
-        <div className="flex items-center gap-2">
-          <button className="p-2 text-slate-400 hover:bg-slate-50 hover:text-slate-900 rounded-lg transition-colors"><span className="material-symbols-outlined">chevron_left</span></button>
-          <button className="w-9 h-9 flex items-center justify-center bg-slate-900 text-white rounded-lg text-sm font-bold shadow-sm hover:bg-slate-800 transition-colors">1</button>
-          <button className="p-2 text-slate-400 hover:bg-slate-50 hover:text-slate-900 rounded-lg transition-colors"><span className="material-symbols-outlined">chevron_right</span></button>
-        </div>
-      </div>
-
-
     </div>
   );
 };
